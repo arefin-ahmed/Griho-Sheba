@@ -1,0 +1,27 @@
+
+!.env.example
+.github
+
+
+# Java / Maven
+backend/target/
+backend/deps.out
+backend/src/main/resources/application.properties
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Node
+# Dependencies
+frontend/node_modules/
+# Build
+frontend/dist/
