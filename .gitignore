@@ -2,7 +2,6 @@
 !.env.example
 .github
 
-
 # Java / Maven
 backend/target/
 backend/deps.out
