@@ -40,7 +40,7 @@ export default function Home() {
     useEffect(() => {
         const fetchWorkers = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/workers');
+                const response = await axios.get('http://localhost:8080/api/workers');
                 setWorkers(response.data.slice(0, 3)); // Teaser: top 3 only
             } catch (err) {
                 console.error('Failed to load workers:', err);

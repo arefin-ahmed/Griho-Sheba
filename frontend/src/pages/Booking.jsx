@@ -40,7 +40,7 @@ export default function Booking() {
         if (workerId) return;
         const fetchWorkers = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/workers');
+                const response = await axios.get('http://localhost:8080/api/workers');
                 let list = response.data;
                 if (specialtyFilter) list = list.filter(w => w.specialty === specialtyFilter);
                 if (searchFilter) list = list.filter(w => w.name.toLowerCase().includes(searchFilter.toLowerCase()));

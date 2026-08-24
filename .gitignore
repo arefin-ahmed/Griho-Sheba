@@ -1,6 +1,8 @@
 
 !.env.example
 .github
+pom.xml
+PROJECT_DOCUMENTATION.md
 
 # Java / Maven
 backend/target/
