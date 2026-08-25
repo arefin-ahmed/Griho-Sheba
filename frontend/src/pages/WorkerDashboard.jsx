@@ -181,7 +181,7 @@ export default function WorkerDashboard() {
                                                 ❌ Decline Work
                                             </button>
                                         </>
-                                    )}
+                                    )} 
 
                                     {booking.status === 'CONFIRMED' && (
                                         <button onClick={() => handleUpdateStatus(booking.id, 'COMPLETED')}
