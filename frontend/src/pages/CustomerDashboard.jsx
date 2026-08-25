@@ -63,6 +63,19 @@ export default function CustomerDashboard() {
         }
     };
 
+    const handleViewReceipt = async (booking) => {
+        setLoadingReceipt(true);
+        try {
+            const response = await axios.get(`http://localhost:8080/payments/booking/${booking.id}`);
+            setReceipt({ ...response.data, bookingDetails: booking });
+        } catch (err) {
+            console.error("Failed to load receipt:", err);
+            alert("Receipt not found. The payment may not be completed yet.");
+        } finally {
+            setLoadingReceipt(false);
+        }
+    };
+
     const [receipt, setReceipt] = useState(null);
     const [loadingReceipt, setLoadingReceipt] = useState(false);
     
