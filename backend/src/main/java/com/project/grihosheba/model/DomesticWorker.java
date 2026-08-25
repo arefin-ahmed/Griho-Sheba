@@ -47,21 +47,55 @@ public class DomesticWorker {
     // Standard Getters and Setters
     // ==========================================
 
-    public Long getWorkerId() { return workerId; }
-    public void setWorkerId(Long workerId) { this.workerId = workerId; }
+    public Long getWorkerId() {
+        return workerId;
+    }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public void setWorkerId(Long workerId) {
+        this.workerId = workerId;
+    }
 
-    public String getNidNumber() { return nidNumber; }
-    public void setNidNumber(String nidNumber) { this.nidNumber = nidNumber; }
+    public User getUser() {
+        return user;
+    }
 
-    public Boolean getIsVerified() { return isVerified; }
-    public void setIsVerified(Boolean isVerified) { this.isVerified = isVerified; }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    public Boolean getIsAvailable() { return isAvailable; }
-    public void setIsAvailable(Boolean isAvailable) { this.isAvailable = isAvailable; }
+    public String getNidNumber() {
+        return nidNumber;
+    }
 
-    public Double getRating() { return rating; }
-    public void setRating(Double rating) { this.rating = rating; }
+    public void setNidNumber(String nidNumber) {
+        this.nidNumber = nidNumber;
+    }
+
+    public Boolean getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public Boolean getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getPhotoUrl() {
+        return user != null ? user.getPhotoUrl() : null;
+    }
 }

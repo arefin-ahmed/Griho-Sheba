@@ -52,6 +52,20 @@ export default function WorkerDashboard() {
         }
     };
 
+    // NEW: Function to handle accepting or completing jobs
+    const handleUpdateStatus = async (bookingId, newStatus) => {
+        try {
+            await axios.put(`http://localhost:8080/bookings/${bookingId}/status`, {
+                status: newStatus
+            });
+            alert(`Job status updated to ${newStatus} successfully!`);
+            window.location.reload(); // Refresh the dashboard to show the new status
+        } catch (error) {
+            console.error('Failed to update status', error);
+            alert('Could not update the booking status.');
+        }
+    };
+
     const handleSendComplaint = async (e) => {
         e.preventDefault();
         if (!complaintText.trim()) return;
@@ -78,7 +92,7 @@ export default function WorkerDashboard() {
 
     if (!user && !loading) {
         return (
-            <div style={{ textAlign: 'center', marginTop: '100px' }}>
+            <div style={{ textAlign: 'center', margin: '100px auto' }}>
                 <h2 style={{ color: '#2d3748' }}>Please log in to view your dashboard.</h2>
                 <button onClick={() => navigate('/login')} style={{ marginTop: '15px', padding: '12px 25px', backgroundColor: '#003366', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
                     Go to Login
@@ -134,8 +148,8 @@ export default function WorkerDashboard() {
                                         <h3 style={{ margin: 0, color: '#2d3748' }}>Client: {booking.customerName}</h3>
                                         <span style={{
                                             padding: '4px 10px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold',
-                                            backgroundColor: booking.status === 'PENDING' ? '#feebc8' : '#c6f6d5',
-                                            color: booking.status === 'PENDING' ? '#c05621' : '#22543d'
+                                            backgroundColor: booking.status === 'PENDING' ? '#feebc8' : booking.status === 'CONFIRMED' ? '#c6f6d5' : '#e2e8f0',
+                                            color: booking.status === 'PENDING' ? '#c05621' : booking.status === 'CONFIRMED' ? '#22543d' : '#4a5568'
                                         }}>
                                             {booking.status}
                                         </span>
@@ -148,7 +162,23 @@ export default function WorkerDashboard() {
                                     </div>
                                 </div>
 
-                                <div>
+                                {/* UPDATED: Button Group for Actions */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                    
+                                    {booking.status === 'PENDING' && (
+                                        <button onClick={() => handleUpdateStatus(booking.id, 'CONFIRMED')}
+                                            style={{ padding: '8px 15px', backgroundColor: '#c6f6d5', color: '#22543d', border: '1px solid #9ae6b4', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}>
+                                            ✅ Accept Work
+                                        </button>
+                                    )}
+
+                                    {booking.status === 'CONFIRMED' && (
+                                        <button onClick={() => handleUpdateStatus(booking.id, 'COMPLETED')}
+                                            style={{ padding: '8px 15px', backgroundColor: '#bee3f8', color: '#2b6cb0', border: '1px solid #90cdf4', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}>
+                                            🏁 Mark Completed
+                                        </button>
+                                    )}
+
                                     <button onClick={() => setReportingBooking(booking)}
                                         style={{ padding: '8px 15px', backgroundColor: '#fff5f5', color: '#c53030', border: '1px solid #feb2b2', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}>
                                         🚨 Report Client
