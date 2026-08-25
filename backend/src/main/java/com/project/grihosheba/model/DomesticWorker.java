@@ -1,5 +1,6 @@
 package com.project.grihosheba.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,58 +11,57 @@ public class DomesticWorker {
     @Column(name = "worker_id")
     private Long workerId;
 
-    @Column(name = "nid_number", unique = true)
+    // This securely links the worker profile to their verified user identity
+    @OneToOne
+    @JoinColumn(name = "worker_id", insertable = false, updatable = false)
+    @JsonIgnore // Prevents infinite recursion when converting to JSON
+    private User user;
+
     private String nidNumber;
+    private Boolean isVerified;
+    private Boolean isAvailable;
+    private Double rating;
 
-    @Column(name = "is_verified")
-    private Boolean isVerified = false;
+    // ==========================================
+    // Custom Getters for React Frontend
+    // Spring Boot will automatically include these in the API response
+    // ==========================================
 
-    @Column(name = "is_available")
-    private Boolean isAvailable = true;
-
-    private Double rating = 0.00;
-
-    public DomesticWorker() {
-    }
-
-    // --- GETTERS AND SETTERS ---
-    public Long getWorkerId() {
+    public Long getId() {
         return workerId;
     }
 
-    public void setWorkerId(Long workerId) {
-        this.workerId = workerId;
+    public String getName() {
+        return user != null ? user.getName() : "Unknown Worker";
     }
 
-    public String getNidNumber() {
-        return nidNumber;
+    public String getSpecialty() {
+        return user != null ? user.getSpecialty() : "General Service";
     }
 
-    public void setNidNumber(String nidNumber) {
-        this.nidNumber = nidNumber;
+    public String getExperience() {
+        return user != null ? user.getExperience() : "Not specified";
     }
 
-    public Boolean getIsVerified() {
-        return isVerified;
-    }
+    // ==========================================
+    // Standard Getters and Setters
+    // ==========================================
 
-    public void setIsVerified(Boolean isVerified) {
-        this.isVerified = isVerified;
-    }
+    public Long getWorkerId() { return workerId; }
+    public void setWorkerId(Long workerId) { this.workerId = workerId; }
 
-    public Boolean getIsAvailable() {
-        return isAvailable;
-    }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
-    public void setIsAvailable(Boolean isAvailable) {
-        this.isAvailable = isAvailable;
-    }
+    public String getNidNumber() { return nidNumber; }
+    public void setNidNumber(String nidNumber) { this.nidNumber = nidNumber; }
 
-    public Double getRating() {
-        return rating;
-    }
+    public Boolean getIsVerified() { return isVerified; }
+    public void setIsVerified(Boolean isVerified) { this.isVerified = isVerified; }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
+    public Boolean getIsAvailable() { return isAvailable; }
+    public void setIsAvailable(Boolean isAvailable) { this.isAvailable = isAvailable; }
+
+    public Double getRating() { return rating; }
+    public void setRating(Double rating) { this.rating = rating; }
 }
