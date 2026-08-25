@@ -166,10 +166,21 @@ export default function WorkerDashboard() {
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                     
                                     {booking.status === 'PENDING' && (
-                                        <button onClick={() => handleUpdateStatus(booking.id, 'CONFIRMED')}
-                                            style={{ padding: '8px 15px', backgroundColor: '#c6f6d5', color: '#22543d', border: '1px solid #9ae6b4', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}>
-                                            ✅ Accept Work
-                                        </button>
+                                        <>
+                                            <button onClick={() => handleUpdateStatus(booking.id, 'CONFIRMED')}
+                                                style={{ padding: '8px 15px', backgroundColor: '#c6f6d5', color: '#22543d', border: '1px solid #9ae6b4', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}>
+                                                ✅ Accept Work
+                                            </button>
+                                            
+                                            <button onClick={() => {
+                                                if(window.confirm('Are you sure you want to decline this job? The client will be notified.')) {
+                                                    handleUpdateStatus(booking.id, 'CANCELLED');
+                                                }
+                                            }}
+                                                style={{ padding: '8px 15px', backgroundColor: '#fed7d7', color: '#9b2c2c', border: '1px solid #feb2b2', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}>
+                                                ❌ Decline Work
+                                            </button>
+                                        </>
                                     )}
 
                                     {booking.status === 'CONFIRMED' && (
