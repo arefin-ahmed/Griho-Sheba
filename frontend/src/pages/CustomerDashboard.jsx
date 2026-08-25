@@ -63,6 +63,9 @@ export default function CustomerDashboard() {
         }
     };
 
+    const [receipt, setReceipt] = useState(null);
+    const [loadingReceipt, setLoadingReceipt] = useState(false);
+    
     if (!user && !loading) {
         return (
             <div style={{ textAlign: 'center', marginTop: '100px' }}>

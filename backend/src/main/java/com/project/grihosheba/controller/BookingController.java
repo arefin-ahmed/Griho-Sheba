@@ -2,10 +2,13 @@ package com.project.grihosheba.controller;
 
 import com.project.grihosheba.model.Booking;
 import com.project.grihosheba.model.Payment;
+import com.project.grihosheba.repository.PaymentRepository;
 import com.project.grihosheba.service.BookingService;
 import com.project.grihosheba.service.PaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -13,6 +16,7 @@ public class BookingController {
 
     private final BookingService bookingService;
     private final PaymentService paymentService;
+    private PaymentRepository paymentRepository;
 
     public BookingController(BookingService bookingService, PaymentService paymentService) {
         this.bookingService = bookingService;
@@ -43,6 +47,15 @@ public class BookingController {
     @PostMapping("/payments")
     public ResponseEntity<?> recordPayment(@RequestBody Payment payment) {
         return ResponseEntity.ok(paymentService.recordPayment(payment));
+    }
+
+    @GetMapping("/payments/booking/{bookingId}")
+    public ResponseEntity<?> getPaymentByBookingId(@PathVariable Long bookingId) {
+        List<Payment> payments = paymentRepository.findByBookingId(bookingId);
+        if (!payments.isEmpty()) {
+            return ResponseEntity.ok(payments.get(0));
+        }
+        return ResponseEntity.notFound().build(); // Returns 404 if not paid yet
     }
 
     public static class StatusUpdate {
