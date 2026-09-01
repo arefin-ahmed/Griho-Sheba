@@ -10,8 +10,6 @@ griho_sheba/
     └── schema.sql
 ```
 
-## What changed vs. your uploaded DP.zip
-
 **Frontend**
 - `Navbar.jsx`, `Footer.jsx`, `Login.jsx`, `Register.jsx`, `AdminDashboard.jsx` — carried over as-is.
 - `Dashboard.jsx` (which handled both roles) was split into `CustomerDashboard.jsx` and `WorkerDashboard.jsx` per your tree.
